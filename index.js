@@ -31,7 +31,7 @@ async function fetchData() {
 
 async function Timer() {
 const currentTimestamp = Date.now()
-const calc = 60 * 60 * 1000 
+const calc = 60.1 * 60 * 1000 
 const targetTimestamp = currentTimestamp + calc 
 const oneSecond = 1000 
 let timeLeft = targetTimestamp - currentTimestamp
@@ -52,17 +52,8 @@ const intervalId = setInterval(() => {
 if (timeLeft >= 3600000) {
     let hours = Math.floor(timeLeft / 1000 / 60 / 60)
     console.log('Script akan dieksekusi lagi pada', hours, 'Jam')
-
-    setTimeout(() => {
-        clearInterval(intervalId)
-        main(`${hours} Jam`)
-    }, timeLeft)
 } else if (timeLeft >= 60000 && timeLeft < 3600000) {
     console.log('Script akan dieksekusi lagi pada', timer, 'menit')
-    setTimeout(() => {
-        clearInterval(intervalId)
-        main(`${timer} menit`)
-    }, timeLeft)
 } else if (timeLeft < 60000) {
     let second = timeLeft / 1000
     console.log('Script akan dieksekusi lagi pada', second, 'detik')
