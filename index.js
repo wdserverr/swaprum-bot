@@ -17,11 +17,11 @@ async function fetchData() {
             });
 
             let data = await response.json();
-            console.log(data);
+            console.log(address[i], data);
         } catch (error) {
             console.log(error.message);
         }
-        
+
     }
     console.log(`\n####################################`)
     console.log(`\nClaim Selesai\n`)
@@ -30,38 +30,47 @@ async function fetchData() {
 }
 
 async function Timer() {
-const currentTimestamp = Date.now()
-const calc = 60.1 * 60 * 1000 
-const targetTimestamp = currentTimestamp + calc 
-const oneSecond = 1000 
-let timeLeft = targetTimestamp - currentTimestamp
-let timer = timeLeft / 1000 / 60
+    const currentTimestamp = Date.now()
+    const calc = 60 * 60 * 1000
+    const targetTimestamp = currentTimestamp + calc
+    const oneSecond = 1000
+    let timeLeft = targetTimestamp - currentTimestamp
+    let timer = timeLeft / 1000 / 60
 
-const intervalId = setInterval(() => {
-    timeLeft -= oneSecond
-    console.log(
-        Math.floor(timeLeft / 1000 / 60 / 60),
-        'Jam',
-        Math.floor((timeLeft / 1000 / 60) % 60),
-        'Menit',
-        Math.floor((timeLeft / 1000) % 60),
-        'Detik remaining...'
-    )
-}, oneSecond)
+    const intervalId = setInterval(() => {
+        timeLeft -= oneSecond
+        console.log(
+            Math.floor(timeLeft / 1000 / 60 / 60),
+            'Jam',
+            Math.floor((timeLeft / 1000 / 60) % 60),
+            'Menit',
+            Math.floor((timeLeft / 1000) % 60),
+            'Detik remaining...'
+        )
+    }, oneSecond)
 
-if (timeLeft >= 3600000) {
-    let hours = Math.floor(timeLeft / 1000 / 60 / 60)
-    console.log('Script akan dieksekusi lagi pada', hours, 'Jam')
-} else if (timeLeft >= 60000 && timeLeft < 3600000) {
-    console.log('Script akan dieksekusi lagi pada', timer, 'menit')
-} else if (timeLeft < 60000) {
-    let second = timeLeft / 1000
-    console.log('Script akan dieksekusi lagi pada', second, 'detik')
-    setTimeout( async () => {
-        clearInterval(intervalId)
-        await fetchData();
-    }, timeLeft)
-}
+    if (timeLeft >= 3600000) {
+        let hours = Math.floor(timeLeft / 1000 / 60 / 60)
+        console.log('Script akan dieksekusi lagi pada', hours, 'Jam')
+
+        setTimeout(async() => {
+            clearInterval(intervalId)
+            await fetchData();
+        }, timeLeft)
+    } else if (timeLeft >= 60000 && timeLeft < 3600000) {
+        console.log('Script akan dieksekusi lagi pada', timer, 'menit')
+        setTimeout(async() => {
+            clearInterval(intervalId)
+            await fetchData();
+        }, timeLeft)
+    } else if (timeLeft < 60000) {
+        let second = timeLeft / 1000
+        console.log('Script akan dieksekusi lagi pada', second, 'detik')
+        setTimeout(async () => {
+            clearInterval(intervalId)
+            await fetchData();
+        }, timeLeft)
+    }
 }
 
 fetchData()
