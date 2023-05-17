@@ -9,3 +9,6 @@ copy dibagian javascript ![Screenshot 2023-05-17 144538](https://github.com/wdse
 lalu paste didalam file address.js
 
 export const address = paste hasil copy tadi disini
+
+
+Jalankan script nya dgn ```node index.js```
